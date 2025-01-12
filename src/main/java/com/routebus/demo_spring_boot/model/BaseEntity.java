@@ -20,9 +20,7 @@ public class BaseEntity  implements Serializable {
 
     @PrePersist
     public void onPrePersist() {
-        System.out.println("PRESIST");
         this.isDeleted = false;
-        String timestamp = DateUtils.getNowDateStringFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         this.createAt = date;
         this.updateAt = date;

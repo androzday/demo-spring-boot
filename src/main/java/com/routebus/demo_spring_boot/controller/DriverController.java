@@ -21,8 +21,25 @@ public class DriverController {
     @RequestMapping(value = URLS.DRIVER.SAVE,method = RequestMethod.POST)
     public Response save(@RequestBody DriverDTO driverDTO){
         try {
-            System.out.println("THIS");
             driverService.save(driverDTO);
+            return ResponseUtils.getSuccessResponse();
+        }catch (Exception e){
+            return ResponseUtils.getErrorMessageResponse(e.getMessage());
+        }
+    }
+    @RequestMapping(value = URLS.DRIVER.UPDATE,method = RequestMethod.POST)
+    public Response update(@RequestBody DriverDTO driverDTO){
+        try {
+            driverService.update(driverDTO);
+            return ResponseUtils.getSuccessResponse();
+        }catch (Exception e){
+            return ResponseUtils.getErrorMessageResponse(e.getMessage());
+        }
+    }
+    @RequestMapping(value = URLS.DRIVER.DELETE,method = RequestMethod.POST)
+    public Response delete(@RequestParam Long id){
+        try {
+            driverService.delete(id);
             return ResponseUtils.getSuccessResponse();
         }catch (Exception e){
             return ResponseUtils.getErrorMessageResponse(e.getMessage());
@@ -31,7 +48,6 @@ public class DriverController {
     @RequestMapping(value = URLS.DRIVER.FIND_ONE,method = RequestMethod.GET)
     public Response findOne(@RequestParam Long id){
         try {
-            System.out.println(id);
             DriverDTO driverDTO = driverService.findOne(id);
             return ResponseUtils.getSuccessResponse(driverDTO);
         }catch (Exception e){

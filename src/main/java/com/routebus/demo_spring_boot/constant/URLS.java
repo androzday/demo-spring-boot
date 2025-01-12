@@ -9,6 +9,8 @@ public interface URLS {
         public static final String SAVE = "/save";
         public static final String FIND_ALL = "/find-all";
         public static final String FIND_ONE = "/find-one";
+        public static final String DELETE = "/delete";
+        public static final String UPDATE = "/update";
     }
 
 }

@@ -5,6 +5,7 @@ import com.routebus.demo_spring_boot.model.dto.DriverDTO;
 import com.routebus.demo_spring_boot.model.entity.Driver;
 import com.routebus.demo_spring_boot.service.DriverService;
 import com.routebus.demo_spring_boot.repository.DriverRepostiory;
+import com.routebus.demo_spring_boot.utils.MapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void save(DriverDTO driverDTO) {
-        System.out.println("find");
         Driver lastDriver = driverRepostiory.findTopByOrderByIdDesc();
         System.out.println(driverDTO);
         Driver driver = objectMapper.convertValue(driverDTO, Driver.class);
@@ -35,22 +35,33 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void delete(Long id) {
-
+        Driver driver = driverRepostiory.findById(id).orElse(null);
+        assert driver != null;
+        driver.setIsDeleted(true);
+        driverRepostiory.save(driver);
     }
 
     @Override
     public void update(DriverDTO driverDTO) {
+        Driver driver = driverRepostiory.findById(driverDTO.getId()).orElse(null);
 
+        driver = objectMapper.convertValue(driverDTO, Driver.class);
+        driverRepostiory.save(driver);
     }
 
     @Override
     public List<DriverDTO> findAll(Pageable pageable) {
-        return null;
+        List<Driver> drivers = driverRepostiory.findAll();
+        List<DriverDTO> driverDTO = MapperUtils.convertList(drivers,DriverDTO.class);
+        return driverDTO;
     }
 
     @Override
     public DriverDTO findOne(Long id) {
-        return objectMapper.convertValue(driverRepostiory.findById(id),DriverDTO.class);
+        Driver driver = driverRepostiory.findById(id).orElse(null);
+        System.out.println(driver.getName());
+        DriverDTO driverDTO = objectMapper.convertValue(driver,DriverDTO.class);
+        return driverDTO;
     }
 
     private String generateCodeDriver(Driver driver){
