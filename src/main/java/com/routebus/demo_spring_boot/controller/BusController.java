@@ -2,9 +2,9 @@ package com.routebus.demo_spring_boot.controller;
 
 import com.routebus.demo_spring_boot.common.Response;
 import com.routebus.demo_spring_boot.constant.URLS;
+import com.routebus.demo_spring_boot.model.dto.BusDTO;
+import com.routebus.demo_spring_boot.service.BusService;
 import com.routebus.demo_spring_boot.utils.ResponseUtils;
-import com.routebus.demo_spring_boot.model.dto.DriverDTO;
-import com.routebus.demo_spring_boot.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -12,52 +12,52 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = URLS.DRIVER.MODULE)
-public class DriverController {
+@RequestMapping(value = URLS.BUS.MODULE)
+public class BusController {
     @Autowired
-    private DriverService driverService;
+    private BusService busService;
 
-    @RequestMapping(value = URLS.DRIVER.SAVE,method = RequestMethod.POST)
-    public Response save(@RequestBody DriverDTO driverDTO){
+    @RequestMapping(value = URLS.BUS.SAVE,method = RequestMethod.POST)
+    public Response save(@RequestBody BusDTO busDTO){
         try {
-            driverService.save(driverDTO);
+            busService.save(busDTO);
             return ResponseUtils.getSuccessResponse();
         }catch (Exception e){
             return ResponseUtils.getErrorMessageResponse(e.getMessage());
         }
     }
-    @RequestMapping(value = URLS.DRIVER.UPDATE,method = RequestMethod.POST)
-    public Response update(@RequestBody DriverDTO driverDTO){
+    @RequestMapping(value = URLS.BUS.UPDATE,method = RequestMethod.POST)
+    public Response update(@RequestBody BusDTO busDTO){
         try {
-            driverService.update(driverDTO);
+            busService.update(busDTO);
             return ResponseUtils.getSuccessResponse();
         }catch (Exception e){
             return ResponseUtils.getErrorMessageResponse(e.getMessage());
         }
     }
-    @RequestMapping(value = URLS.DRIVER.DELETE,method = RequestMethod.POST)
+    @RequestMapping(value = URLS.BUS.DELETE,method = RequestMethod.POST)
     public Response delete(@RequestParam Long id){
         try {
-            driverService.delete(id);
+            busService.delete(id);
             return ResponseUtils.getSuccessResponse();
         }catch (Exception e){
             return ResponseUtils.getErrorMessageResponse(e.getMessage());
         }
     }
-    @RequestMapping(value = URLS.DRIVER.FIND_ONE,method = RequestMethod.GET)
+    @RequestMapping(value = URLS.BUS.FIND_ONE,method = RequestMethod.GET)
     public Response findOne(@RequestParam Long id){
         try {
-            DriverDTO driverDTO = driverService.findOne(id);
-            return ResponseUtils.getSuccessResponse(driverDTO);
+            BusDTO busDTO = busService.findOne(id);
+            return ResponseUtils.getSuccessResponse(busDTO);
         }catch (Exception e){
             return ResponseUtils.getErrorMessageResponse(e.getMessage());
         }
     }
-    @RequestMapping(value = URLS.DRIVER.FIND_ALL,method = RequestMethod.GET)
+    @RequestMapping(value = URLS.BUS.FIND_ALL,method = RequestMethod.GET)
     public Response findAll(Pageable pageable){
         try {
-            List<DriverDTO> driverDTO = driverService.findAll(pageable);
-            return ResponseUtils.getSuccessResponse(driverDTO);
+            List<BusDTO> busDTO = busService.findAll(pageable);
+            return ResponseUtils.getSuccessResponse(busDTO);
         }catch (Exception e){
             return ResponseUtils.getErrorMessageResponse(e.getMessage());
         }

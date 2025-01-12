@@ -13,4 +13,31 @@ public interface URLS {
         public static final String UPDATE = "/update";
     }
 
+    interface BUS{
+        public static final String MODULE = ROOT + V1 + "/bus";
+        public static final String SAVE = "/save";
+        public static final String FIND_ALL = "/find-all";
+        public static final String FIND_ONE = "/find-one";
+        public static final String DELETE = "/delete";
+        public static final String UPDATE = "/update";
+    }
+
+    interface BUS_ROUTE{
+        public static final String MODULE = ROOT + V1 + "/bus-route";
+        public static final String SAVE = "/save";
+        public static final String FIND_ALL = "/find-all";
+        public static final String FIND_ONE = "/find-one";
+        public static final String DELETE = "/delete";
+        public static final String UPDATE = "/update";
+    }
+
+    interface ROUTE{
+        public static final String MODULE = ROOT + V1 + "/route";
+        public static final String SAVE = "/save";
+        public static final String FIND_ALL = "/find-all";
+        public static final String FIND_ONE = "/find-one";
+        public static final String DELETE = "/delete";
+        public static final String UPDATE = "/update";
+    }
+
 }

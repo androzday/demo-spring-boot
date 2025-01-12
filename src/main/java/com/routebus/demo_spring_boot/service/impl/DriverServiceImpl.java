@@ -16,15 +16,13 @@ import java.util.List;
 public class DriverServiceImpl implements DriverService {
     @Autowired
     private DriverRepostiory driverRepostiory;
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Override
     public void save(DriverDTO driverDTO) {
         Driver lastDriver = driverRepostiory.findTopByOrderByIdDesc();
-        System.out.println(driverDTO);
-        Driver driver = objectMapper.convertValue(driverDTO, Driver.class);
+        Driver driver = MapperUtils.convert(driverDTO, Driver.class);
 
+        assert driver != null;
         if(lastDriver == null){
             driver.setDriverCode("DRV0001");
         }else {
@@ -43,25 +41,22 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void update(DriverDTO driverDTO) {
-        Driver driver = driverRepostiory.findById(driverDTO.getId()).orElse(null);
-
-        driver = objectMapper.convertValue(driverDTO, Driver.class);
+        Driver driver = MapperUtils.convert(driverDTO, Driver.class);
+        assert driver != null;
         driverRepostiory.save(driver);
     }
 
     @Override
     public List<DriverDTO> findAll(Pageable pageable) {
         List<Driver> drivers = driverRepostiory.findAll();
-        List<DriverDTO> driverDTO = MapperUtils.convertList(drivers,DriverDTO.class);
-        return driverDTO;
+        List<DriverDTO> driverDTOS = MapperUtils.convertList(drivers,DriverDTO.class);
+        return driverDTOS;
     }
 
     @Override
     public DriverDTO findOne(Long id) {
         Driver driver = driverRepostiory.findById(id).orElse(null);
-        System.out.println(driver.getName());
-        DriverDTO driverDTO = objectMapper.convertValue(driver,DriverDTO.class);
-        return driverDTO;
+        return MapperUtils.convert(driver,DriverDTO.class);
     }
 
     private String generateCodeDriver(Driver driver){

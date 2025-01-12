@@ -33,7 +33,6 @@ public final class MapperUtils {
 
     public static <T> T convert(Object source, Class<T> targetClass) {
         try {
-
             return MapperUtils.objectMapper.convertValue(source, targetClass);
         } catch (Exception e){
             e.printStackTrace();
