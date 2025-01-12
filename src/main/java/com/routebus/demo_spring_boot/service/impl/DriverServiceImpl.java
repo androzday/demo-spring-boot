@@ -1,10 +1,9 @@
 package com.routebus.demo_spring_boot.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.routebus.demo_spring_boot.model.dto.DriverDTO;
 import com.routebus.demo_spring_boot.model.entity.Driver;
 import com.routebus.demo_spring_boot.service.DriverService;
-import com.routebus.demo_spring_boot.repository.DriverRepostiory;
+import com.routebus.demo_spring_boot.repository.DriverRepository;
 import com.routebus.demo_spring_boot.utils.MapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +14,11 @@ import java.util.List;
 @Service
 public class DriverServiceImpl implements DriverService {
     @Autowired
-    private DriverRepostiory driverRepostiory;
+    private DriverRepository driverRepository;
 
     @Override
     public void save(DriverDTO driverDTO) {
-        Driver lastDriver = driverRepostiory.findTopByOrderByIdDesc();
+        Driver lastDriver = driverRepository.findTopByOrderByIdDesc();
         Driver driver = MapperUtils.convert(driverDTO, Driver.class);
 
         assert driver != null;
@@ -28,34 +27,34 @@ public class DriverServiceImpl implements DriverService {
         }else {
             driver.setDriverCode(generateCodeDriver(lastDriver));
         }
-        driverRepostiory.save(driver);
+        driverRepository.save(driver);
     }
 
     @Override
     public void delete(Long id) {
-        Driver driver = driverRepostiory.findById(id).orElse(null);
+        Driver driver = driverRepository.findById(id).orElse(null);
         assert driver != null;
         driver.setIsDeleted(true);
-        driverRepostiory.save(driver);
+        driverRepository.save(driver);
     }
 
     @Override
     public void update(DriverDTO driverDTO) {
         Driver driver = MapperUtils.convert(driverDTO, Driver.class);
         assert driver != null;
-        driverRepostiory.save(driver);
+        driverRepository.save(driver);
     }
 
     @Override
     public List<DriverDTO> findAll(Pageable pageable) {
-        List<Driver> drivers = driverRepostiory.findAll();
+        List<Driver> drivers = driverRepository.findAll();
         List<DriverDTO> driverDTOS = MapperUtils.convertList(drivers,DriverDTO.class);
         return driverDTOS;
     }
 
     @Override
     public DriverDTO findOne(Long id) {
-        Driver driver = driverRepostiory.findById(id).orElse(null);
+        Driver driver = driverRepository.findById(id).orElse(null);
         return MapperUtils.convert(driver,DriverDTO.class);
     }
 
