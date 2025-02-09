@@ -1,0 +1,11 @@
+type Query{
+    getDriverByCode(driverCode: String!): Driver
+    getDriverById(id: ID!): Driver
+    getAllDrivers : [Driver]
+}
+
+type Driver{
+    id: ID!
+    name: String!
+    driverCode: String!
+}

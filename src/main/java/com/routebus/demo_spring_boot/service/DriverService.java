@@ -10,5 +10,6 @@ import java.util.List;
      void delete(Long id);
      void update(DriverDTO driverDTO);
      List<DriverDTO> findAll(Pageable pageable);
+     List<DriverDTO> findAll();
      DriverDTO findOne(Long id);
 }

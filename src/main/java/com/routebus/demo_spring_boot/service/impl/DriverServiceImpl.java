@@ -57,7 +57,12 @@ public class DriverServiceImpl implements DriverService {
         Driver driver = driverRepository.findById(id).orElse(null);
         return MapperUtils.convert(driver,DriverDTO.class);
     }
-
+    @Override
+    public List<DriverDTO> findAll() {
+        List<Driver> drivers = driverRepository.findAll();
+        List<DriverDTO> driverDTOS = MapperUtils.convertList(drivers,DriverDTO.class);
+        return driverDTOS;
+    }
     private String generateCodeDriver(Driver driver){
         String lastCode = driver.getDriverCode();
         String numberPart = lastCode.substring(4);
